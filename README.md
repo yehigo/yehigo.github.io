@@ -1,2 +1,2 @@
-# yehigo.github.io
+# Yehigo blog
 Yehigo public repository
