@@ -2,3 +2,4 @@ theme: jekyll-theme-cayman
 # Google Analytics
 google_analytics: UA-128865649-1
 google_adsense: ca-pub-3418683625167272
+JEKYLL_ENV=production
