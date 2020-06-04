@@ -7,4 +7,4 @@ Please follow the below links for learnings.
 1.   [Software design introduction](/software/design/introduction)
 
 
-2. [Travel](/Travel/first)
+2. [Travel](/travel/first)
