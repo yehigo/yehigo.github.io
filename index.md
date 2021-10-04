@@ -8,3 +8,7 @@ Please follow the below links for learnings.
 
 
 2. [Travel](/travel/first)
+
+
+### Dev Specific 
+1. [Resume Pintu Meena](/p/Resume_pintu_meena.pdf)
