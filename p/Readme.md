@@ -5,6 +5,6 @@
 
 | Process name | Status |
 |---| :---: |
-|Resume build & Publish |![PDF build](https://github.com/meenapintu/resume/actions/workflows/blank.yml/badge.svg)|
+|Resume build & Publish |<img src="https://github.com/meenapintu/resume/actions/workflows/blank.yml/badge.svg" alt="Status"/>|
 
 
