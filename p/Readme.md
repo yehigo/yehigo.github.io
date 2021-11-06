@@ -9,16 +9,15 @@ blog.yehigo.com ![GitHub commits](https://badgen.net/github/commits/yehigo/yehig
 
 | Process name | Status | size|
 |---| :---: | --- |
-|Resume build & Publish |<img src="https://github.com/meenapintu/resume/actions/workflows/blank.yml/badge.svg" alt="Status"/>|![size](https://badge-size.herokuapp.com/meenapintu/resume/gh-pages/resume.pdf)|
+|Resume build & Publish |[![Build LaTeX document](https://github.com/Meenapintu/resume/actions/workflows/blank.yml/badge.svg)](https://github.com/Meenapintu/resume/actions/workflows/blank.yml)  |![size](https://badge-size.herokuapp.com/meenapintu/resume/gh-pages/resume.pdf)|
 
-![Your Repository’s Stats](https://github-readme-stats.vercel.app/api?username=meenapintu&show_icons=true)
+![Your Repository’s Stats](https://github-readme-stats.vercel.app/api?username=meenapintu&show_icons=true&theme=blue-green)
 
 ![Your Repository's Stats](https://github-readme-stats.vercel.app/api/top-langs/?username=meenapintu&theme=blue-green)
 
 ![Streak](https://github-readme-streak-stats.herokuapp.com/?user=meenapintu)
 
 ![Your github trophy](https://github-profile-trophy.vercel.app/?username=meenapintu&row=1)
-
 
 
 
