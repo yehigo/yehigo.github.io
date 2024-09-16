@@ -10,8 +10,8 @@
     "webpage_url": "https://www.foxsports.com/watch/fmc-xyvyiht6jsc1hk5k",
     "webpage_url_basename": "fmc-xyvyiht6jsc1hk5k",
     "extractor_key": "Generic",
-    "playlist": None,
-    "playlist_index": None,
+    "playlist": "None",
+    "playlist_index": "None",
     "thumbnails": [
         {
             "url": "https://a57.foxsports.com/static-media.fox.com/fmc/prod/sports/VX-10404655/1280/720/250376uj0v9v78t3.jpg?ve=1&tl=1",
@@ -20,7 +20,7 @@
     ],
     "display_id": "fmc-xyvyiht6jsc1hk5k",
     "upload_date": "20240915",
-    "requested_subtitles": None,
+    "requested_subtitles": "None",
     "format_id": "0",
     "format": "0 - unknown",
     "ext": "mp4",
