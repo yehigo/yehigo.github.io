@@ -12,12 +12,6 @@
     "extractor_key": "Generic",
     "playlist": "None",
     "playlist_index": "None",
-    "thumbnails": [
-        {
-            "url": "https://a57.foxsports.com/static-media.fox.com/fmc/prod/sports/VX-10404655/1280/720/250376uj0v9v78t3.jpg?ve=1&tl=1",
-            "id": "0"
-        }
-    ],
     "display_id": "fmc-xyvyiht6jsc1hk5k",
     "upload_date": "20240915",
     "requested_subtitles": "None",
@@ -26,5 +20,5 @@
     "ext": "mp4",
     "duration":"456",
     "protocol": "https",
-    "automatic_captions": []
+    "filesize":"filesize",
 }
