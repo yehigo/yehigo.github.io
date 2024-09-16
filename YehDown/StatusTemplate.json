@@ -1,0 +1,10 @@
+{
+    "status": "status",
+    "downloaded_bytes": "downloaded_bytes",
+    "total_bytes": "total_bytes",
+    "filename": "filename",
+    "eta": "eta",
+    "speed": "dspeed",
+    "elapsed": "elapsed",
+    "_percent_str": "percent_str"
+}
