@@ -1,1 +1,14 @@
+{
+    "certifi": {"version":"version", "custom_install":"false"},
+    "requests": {"version":"version", "custom_install":"false"},
+    "flask_cors": {"version":"version", "custom_install":"false"},
+    "flask": {"version":"version", "custom_install":"false"},
+    "youtube_dl": {"version":"version", "custom_install":"--force-reinstall https://codeload.github.com/ytdl-org/youtube-dl/zip/refs/heads/master"},
+    "yehdown": {"version":"version", "custom_install":"--upgrade --index-url https://test.pypi.org/simple/ --no-deps yehdown"},
+    "webui2": {"version":"version", "custom_install":"false"},
 
+  
+   
+  
+    
+}
