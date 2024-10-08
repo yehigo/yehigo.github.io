@@ -1,0 +1,9 @@
+{
+  "url":"https://blog.yehigo.com/YehDown/ffmpeg.zip",
+  "zipFileName": "ffmpeg.zip",
+  "relativeBin": "ffmpeg",
+  "binName":"ffmpeg",
+  "userName":" FFmpeg Encoder",
+  "description" : "A complete, cross-platform solution to record, convert and stream audio and video.",
+  "official_webpage": "https://www.ffmpeg.org/"
+ }
