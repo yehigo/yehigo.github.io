@@ -1,5 +1,5 @@
 {
-    "youtube_dl": {"version":"version", "i": "pip", "custom_install":"--force-reinstall https://codeload.github.com/ytdl-org/youtube-dl/zip/refs/heads/master"},
+    "yt_dlp": {"version":"version", "i": "pip", "custom_install":"--force-reinstall https://codeload.github.com/yt-dlp/yt-dlp/zip/refs/heads/master"},
     "yehdown": {"version":"version", "i": "pip", "custom_install":"--upgrade --index-url https://test.pypi.org/simple/ --no-deps yehdown"},
     "ffmpeg": {"version":"version", "i": "YehigoInstaller", "custom_install":"https://blog.yehigo.com/YehDown/ffmpeg.json"}
 }
