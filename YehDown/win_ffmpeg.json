@@ -1,6 +1,6 @@
 {
-  "url":"https://blog.yehigo.com/YehDown/win_ffmpeg.zip",
-  "zipFileName": "win_ffmpeg.zip",
+  "url":"https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-win64-gpl-shared.zip",
+  "zipFileName": "ffmpeg-master-latest-win64-gpl-shared.zip",
   "relativeBin": "bin/ffmpeg.exe",
   "binName":"ffmpeg.exe",
   "userName":" FFmpeg Encoder",
