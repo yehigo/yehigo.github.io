@@ -1,5 +1,5 @@
 {
     "yt_dlp": {"version":"version", "i": "pip", "custom_install":"--force-reinstall https://codeload.github.com/yt-dlp/yt-dlp/zip/refs/heads/master"},
     "yehdown": {"version":"version", "i": "pip", "custom_install":"--upgrade --index-url https://test.pypi.org/simple/ --no-deps yehdown"},
-    "ffmpeg": {"version":"version2", "i": "YehigoInstaller", "Mac_custom_install":"https://blog.yehigo.com/YehDown/ffmpeg.json",  "Windows_custom_install":"https://blog.yehigo.com/YehDown/win_ffmpeg.json", "Linux_custom_install":"https://blog.yehigo.com/YehDown/ffmpeg.json", "Other_custom_install":"https://blog.yehigo.com/YehDown/ffmpeg.json"}
+    "ffmpeg": {"version":"version2", "i": "YehigoInstaller", "Mac_custom_install":"https://blog.yehigo.com/YehDown/ffmpeg/mac_ffmpeg.json",  "Windows_custom_install":"https://blog.yehigo.com/YehDown/ffmpeg/win_ffmpeg.json", "Linux_custom_install":"https://blog.yehigo.com/YehDown/ffmpeg/linux_ffmpeg.json", "Other_custom_install":"https://blog.yehigo.com/YehDown/ffmpeg/other_ffmpeg.json"}
 }

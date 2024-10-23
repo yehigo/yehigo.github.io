@@ -1,0 +1,10 @@
+{
+  "url":"https://evermeet.cx/ffmpeg/ffmpeg-117609-g6cf4186d1b.zip",
+  "zipFileName": "ffmpeg.zip",
+  "relativeBin": "bin/ffmpeg",
+  "extract":"bin",
+  "userName":" FFmpeg Encoder",
+  "description" : "A complete, cross-platform solution to record, convert and stream audio and video.",
+  "official_webpage": "https://www.ffmpeg.org/",
+  "devComment": "extract provide only if extraction is needed other than tools as subfolder"
+ }
