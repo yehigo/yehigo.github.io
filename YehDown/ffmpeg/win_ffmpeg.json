@@ -1,7 +1,7 @@
 {
   "url":"https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-win64-gpl-shared.zip",
   "zipFileName": "ffmpeg-master-latest-win64-gpl-shared.zip",
-  "relativeBin": "bin/ffmpeg.exe",
+  "executables": "ffmpeg.exe,ffprove.exe",
   "userName":" FFmpeg Encoder",
   "moveFrom": "ffmpeg-master-latest-win64-gpl-shared",
   "description" : "A complete, cross-platform solution to record, convert and stream audio and video.",
