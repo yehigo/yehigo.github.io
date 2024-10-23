@@ -3,7 +3,7 @@
   "zipFileName": "ffmpeg-master-latest-win64-gpl-shared.zip",
   "executables": "ffmpeg.exe,ffprove.exe",
   "userName":" FFmpeg Encoder",
-  "moveFrom": "ffmpeg-master-latest-win64-gpl-shared",
+  "moveFrom": "ffmpeg-master-latest-win64-gpl-shared/",
   "description" : "A complete, cross-platform solution to record, convert and stream audio and video.",
   "official_webpage": "https://www.ffmpeg.org/"
  }
