@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128865649-1"></script>
+</head>
+
+
+
+<style>
+    ._yeahigoSubmit {
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 16px 32px;
+        text-decoration: none;
+        cursor: pointer;
+        height: 3rem;
+        max-height: 3rem;
+        font-size: 16px;
+    }
+
+    ._imbed {
+        position: absolute;
+        width: 100%;
+        max-width: 20%;
+        min-width: 800px;
+        margin-left: 4px;
+    }
+
+    .restOfWord {
+        position: relative;
+        float: right;
+
+        height: 100vh;
+
+        margin-left: 4px;
+    }
+
+
+    .input-field.input-outlined>input {
+        border: 2px solid #eee;
+        padding: 12px 16px 14px;
+        width: 100%;
+        float: left;
+        border-radius: 50px 0px 0px 50px;
+        transition: box-shadow, border-color 0.15s;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .input-field.input-outlined>input:focus:not([readonly]) {
+        border-color: #26a69b;
+        box-shadow: 0 1px 0 0px #26a69b;
+    }
+
+    .input-field.input-outlined>label {
+        left: 27px;
+        display: inline-flex;
+        width: auto !important;
+    }
+
+    .input-field.input-outlined>label.active {
+        background: white;
+        border-left: 4px solid white;
+        border-right: 4px solid white;
+        transform: translateY(-1.75rem);
+        top: 1rem;
+    }
+
+    #toast-container {
+        top: auto !important;
+        right: auto !important;
+        bottom: 10%;
+        left: 1%;
+    }
+
+    .iconText {
+        font-size: 2em;
+        font-family: Lucida Console;
+        color: #78909c;
+    }
+
+    .square {
+        position: relative;
+        width: 64px;
+        height: 100%;
+        background-color: transparent;
+        border-width: 5px;
+        border-style: solid;
+        border-color: #78909c;
+
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        z-index: 1001;
+
+    }
+
+    .yehodwn {
+        z-index: 1001;
+        height: 100%;
+        display: flex;
+
+
+    }
+</style>
+
+
+<body>
+    <div class="_imbed" id="_imbed">
+        <div style="position: sticky; position: -webkit-sticky; top: 0; z-index: 100;">
+            <nav style="width:inherit;max-width:800px;">
+                <div class="nav-wrapper grey lighten-1 ">
+                    <div class="yehodwn brand-logo">
+                        <div class="square iconText"> Y</div>
+                    </div>
+                    <ul id="nav-mobile" class="right hide-on-med-and-down">
+                        <div class="yehodwn brand-logo">
+                            <div class="square iconText"> Y</div>
+                        </div>
+                    </ul>
+                </div>
+            </nav>
+            <form class=" grey lighten-4">
+                <div style="overflow: hidden; padding-right: .5em;">
+                    <div class="row" style="margin-bottom: 0%;">
+                        <div class="col input-field input-outlined center s10"
+                            style="padding-right:0px; margin-right:0px">
+                            <input placeholder="Type a URL" id="_yeahigoMessage"
+                                style="padding-right:0px; margin-right:0px" type="text"
+                                class="validate _yeahigoInput white clickable">
+
+                        </div>
+                        <div class="col input-field  input-outlined center s2 "
+                            style="padding-right:0px; margin-right:0px; padding-left:0px; margin-left:0px">
+                            <div class="green clickable"
+                                style="float: right; width: 100% ; height: 3ren; padding: 12px 0px 14px; border-radius: 0px 50px 50px 0px;  border: 2px solid #eee;">
+                                <button type="button" value="Find" placeholder="type Url of video file"
+                                    onclick="sendMessage();" class="_yeahigoSubmit clickable"> Find</button>
+                            </div>
+                        </div>
+                    </div>
+                    By using this tool, you are agreeing that you have needed permissons from content source.
+                </div>
+            </form>
+            <nav>
+                <div class="nav-wrapper grey lighten-1 downloadFolderClass">
+                    <div class="col s12">
+                        <a href="#!" class="breadcrumb">Download Folder : </a>
+                        <a href="#!" id="downloadFolder" class="breadcrumb">Default download folder</a>
+                    </div>
+                </div>
+            </nav>
+            <div class="progress transparent" style="height:25px; position: relative;top: 0; margin-top: 0px; ">
+                <div class="indeterminate" id="yehdownindeterminate"></div>
+                <div class="determinate green" id="yehdownprogress" style="width: 70%"></div>
+                <div class="indeterminate green lighten-4" id="yehdownindeterminat"></div>
+            </div>
+        </div>
+        <div id="getinfo"> </div>
+
+    </div>
+    <divv class="restOfWord">
+
+        </div>
+
+
+        <script language="JavaScript">
+
+
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+            ga('create', 'UA-128865649-1', 'auto');
+            ga('send', 'pageview');
+
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+
+            gtag('config', 'UA-128865649-1');
+
+            <!-- Google Tag Manager -->
+            (function (w, d, s, l, i) {
+                w[l] = w[l] || []; w[l].push({
+                    'gtm.start':
+                        new Date().getTime(), event: 'gtm.js'
+                }); var f = d.getElementsByTagName(s)[0],
+                    j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                        'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+            })(window, document, 'script', 'dataLayer', 'GTM-TQH6549');
+
+            var sizeHadler = function () {
+                if ($(this).width() < 1024) {
+
+                    $('.restOfWord').hide();
+                    $('._imbed').css('max-width', '100%');
+
+                } else {
+                    var width = $(window).width() - $('#_imbed').width();
+                    console.log(width);
+                    $('.restOfWord').css('width', width + 'px');
+                    $('._imbed').css('max-width', '20%');
+                    $('.restOfWord').show();
+                }
+
+
+            }
+
+            $(window).resize(sizeHadler);
+            $(window).ready(sizeHadler);
+
+
+            var sh = "<style>body{width:100%;margin:0px;}td img{ width:100%;height: 100%;background: red;}h5{ text-transform:capitalize;}.mtb0{ margin-top: 0px;margin-bottom: 0px;}i{max-width: 24px;}.margin-0{ margin:opx;}</style><title> Ydown listing</title><link rel='stylesheet' href='materialize.min.css'  media='screen,projection' /><meta name='viewport' content='width=device-width, initial-scale=1.0'/> <body><div class='card-panel z-depth-2 container-fluid'><table class='bordered responsive-table'><tbody>";
+            var sf = " </tbody> </table></div></div></body>";
+            var s1 = "<tr><td style='padding:0px;' ><div class='row margin-0'><div class='col s12 m12 l12'><table ><tr><td style='width:223px;height:142px;padding:0px;'>";
+
+            var s2 = "</td><td style='background-color:"; s2_1="'><div class='row'><div class='col s12 m12 l12 margin-0'><h5 class='mtb0'><i class=' material-icons' style='vertical-align:middle;'></i><a href='##' >";/*s2.concat(title);*/var s3 = " </a></h5></div>";
+            /* <div class='col s12 m12 l12 margin-0'> <p class='mtb0' ><span style='vertical-align:middle;'>";*s3.concat(id);var s4 = " </span></p> </div>*/
+            var s4 = " <div class='col s12 m12 l12 margin-0'><p class='mtb0' ><span style='vertical-align:middle;'>";/*s4.concat(duration);*/var s5 = " </span></p></div><div class='col s12 m12 l12 margin-0'><p class='mtb0' ><span style='vertical-align:middle;'>";/*s5.concat(format);*/
+            var s6 = " </span></p></div><div class='col s12 m12 l12  margin-0'> <button i style='width:50%' class='btn waves-effect waves-light clickable' type='button' onclick=downloadVideo(\'"; var s7 = "\') name='action'><i class='material-icons right'>cloud_download</i>Video</button><button style='width:50%'' class='btn waves-effect waves-light clickable hide' type='button'  onclick=downloadAudio('"; var s8 = "') name='action'><i class='material-icons right'>cloud_download</i>Audio</button></div></div></td></tr></table></div></div></td></tr>";
+
+
+
+            function list_template(title, id, _host, duration, format, thumb, dffile) {
+                var s = "";
+                //HOST SITE DEPENDENT CODE PART
+                if (_host == "nevertrue") {
+                    s = s.concat(s1).concat("<div style = 'width:223px;' class = 'center ' onclick = 'resize(this)'><div class = ' video-container no-controls '><iframe class = 'center' width = '223px' height = '142px' src = '").concat(_host).concat("/embed/").concat(id).concat("' frameborder = '0' rel = '0' allowfullscreen></iframe></div></div>");
+                }
+                else {
+                    var download_color = "#ffffff";
+                    if(dffile !== null) {
+                        download_color = "#afc283";
+                    } 
+                    //    var fileExt = dffile.split('.').pop();
+                    //    s = s.concat(s1).concat("<video").concat("' style='width:223px;height:142px;padding:0px; controls'>  <source src='file://").concat(dffile).concat("' type='video/").concat(fileExt).concat("'>Video not supported VLC player</video>");
+                    //} else {
+                    s = s.concat(s1).concat("<img src='").concat(thumb).concat("' style='width:223px;height:142px;padding:0px;'>");
+                   // }
+                }
+                //HOST SITE DEPENDENT CODE PART
+                s = s.concat(s2).concat(download_color).concat(s2_1).concat(title).concat(s3).concat(s4).concat(new Date(duration * 1000).toISOString().substr(11, 8)).concat(s5).concat(format).concat(s6).concat(_host).concat(s7).concat(_host).concat(s8);
+
+                return s;
+            }
+
+            function toHtml(json) {
+                return list_template(json["title"], json["id"], json["webpage_url"], json["duration"], json["format"], json["thumbnail"], json["dffile"])
+            }
+
+
+
+
+            function gaHelper(cmd, event, category, action, value) {
+                ga(cmd, {
+                    'hitType': event,
+                    'eventCategory': category,
+                    'eventAction': action,
+                    'eventLabel': (navigator.language || navigator.userLanguage),
+                    'eventValue': value
+                });
+            }
+
+            //======================================================================
+            var YehDownHost = "http://localhost:8080/"
+
+            function getYehDownHost() {
+                if (typeof new_YehDownHost === 'undefined' || new_YehDownHost === null) {
+                    return YehDownHost;
+                }
+
+                else { 
+                    const vlocation = window.location;
+                    const urlParams = new URLSearchParams(vlocation.search);
+                    const vport = urlParams.get('vport');
+                    return vlocation.protocol+"//"+vlocation.hostname+":"+vport+"/";
+                 }
+            }
+
+            // Send a query to the browser process.
+
+            function getDownloadFolder() {
+                // Results in a call to the OnQuery method in client_impl.cc.
+                YehDownExecutior(
+                    { "command": "getDownloadFolder", "url": document.getElementById("_yeahigoMessage").value },
+                    function (response) {
+                       console.log(response);
+                       if(response.result === "None"){
+                        setTimeout(getDownloadFolder, 1000); // 1 seconds delay
+                       }
+                        document.getElementById('downloadFolder').innerHTML = response.result;
+                        gaHelper('send', 'event', 'yehdown', 'df', 1);
+                    },
+                    function (XMLHttpRequest, textStatus, errorThrown) {
+                        M.toast({ html: 'Downloader is Offline ', classes: 'rounded left' });
+                        gaHelper('send', 'event', 'yehdown', 'df', 0);
+                    }
+                );
+            }
+            getDownloadFolder();
+            function downloadAudio(url) {
+                handleClickable(1);
+                // Results in a call to the OnQuery method in client_impl.cc.
+                YehDownExecutior(
+                    {
+                        "command": "downloadAudio", "url": url, "opts": {
+                            'format': 'bestaudio/best',
+                            'writethumbnail': true,
+                            'geo_bypass': true,
+                            'postprocessors': [{
+                                'key': 'FFmpegExtractAudio',
+                                'preferredcodec': 'mp3',
+                                'preferredquality': '192',
+
+                            },
+                            {
+                                'key': 'EmbedThumbnail',
+                                'already_have_thumbnail': true,
+                            }]
+                        }
+                    },
+                    function (response) {
+                        setProgress(response.result);
+                        gaHelper('send', 'event', 'yehdown', 'da', 1);
+
+                    },
+                    function (XMLHttpRequest, textStatus, errorThrown) {
+                        gaHelper('send', 'event', 'yehdown', 'da', 0); alert("some error : try again");
+
+                    }
+                );
+            }
+
+            function downloadVideo(url) {
+                // Results in a call to the OnQuery method in client_impl.cc.
+                handleClickable(1);
+                YehDownExecutior(
+                    { "command": "downloadVideo", "url": url, "opts": { 'geo_bypass': true, 'cachedir': false } },
+                    function (response) {
+                        setProgress(response.result);
+                        gaHelper('send', 'event', 'yehdown', 'dv', 1);
+
+                    },
+                    function (XMLHttpRequest, textStatus, errorThrown) {
+                        errHanlder("some error : try again");
+                        gaHelper('send', 'event', 'yehdown', 'dv', 0);
+                    }
+                );
+            }
+
+            function showInfo(result) {
+                if (result === undefined) {
+                    return;
+                }
+                html = "";
+                for (const key in result["entries"]) {
+                    html = html.concat(toHtml(result["entries"][key]));
+                }
+                document.getElementById('getinfo').innerHTML = html;
+            }
+
+            function sendMessage() {
+                // Results in a call to the OnQuery method in client_impl.cc.
+                handleClickable(1);
+                YehDownExecutior(
+                    {
+                        "command": "getInfo", "url": document.getElementById("_yeahigoMessage").value, "opts": {
+                            'noplaylist': false,
+                            'nocheckcertificate': true,
+                            'extract_flat': true,
+                            'simulate': true
+                        }
+                    },
+                    function (response) {
+                        showInfo(response.result);
+                        gaHelper('send', 'event', 'yehdown', 'gf', 1);
+
+                    }
+                    ,
+                    function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert("some error");
+                        gaHelper('send', 'event', 'yehdown', 'gf', 0);
+                    }
+                );
+            }
+
+            function progressReport() {
+                YehDownExecutior({ "command": "getProgress", "zlukey": "yehigo" },
+                    function (response) {
+                        var report = response.result;
+                        setProgress(report);
+                        checkOnline(report);
+                        gaHelper('send', 'event', 'yehdown', 'progress', 1);
+                    },
+                    function (XMLHttpRequest, textStatus, errorThrown) {
+                        errHanlder(XMLHttpRequest, textStatus, errorThrown);
+                        checkOnline(-1);
+                        gaHelper('send', 'event', 'yehdown', 'progress', 0);
+                    }
+                );
+            }
+
+            function setProgress(progress) {
+                document.getElementById('yehdownprogress').style.width = progress + '%';
+                handleClickable(progress);
+            }
+
+            function YehDownExecutior(cmd, success, failure) {
+                $.ajax({
+                    type: "POST",
+                    crossDomain: true,
+                    url: getYehDownHost() + "YehDown",
+                    contentType: "application/json",
+                    data: JSON.stringify(cmd),
+                    success: function (response) {
+                        success(JSON.parse(response));
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        failure(XMLHttpRequest, textStatus, errorThrown);
+                    }
+                });
+
+            }
+
+            function loadContext() {
+                YehDownExecutior({ "command": "getContext", "zlukey": "yehigo" },
+                    function (response) {
+                        showInfo(response.result.searchData);
+                        if (response.result.searchUrl != undefined) {
+                            document.getElementById("_yeahigoMessage").value = response.result.searchUrl;
+                        }
+                    }, function (XMLHttpRequest, textStatus, errorThrown) {
+                        errHanlder(XMLHttpRequest, textStatus, errorThrown);
+                    }
+                );
+            }
+
+            function handleClickable(progress, message) {
+                if (message == undefined) {
+                    message = "Downloading... " + progress + '% [While download in progress, all downloader buttons will be disabled]';
+                }
+                if (progress > 0 && progress < 100) {
+                    $(".indeterminate").show();
+                    $(".clickable").prop('disabled', true);
+                    document.getElementById('yehdownprogress').innerHTML = message;
+                    $(".clickable").addClass("grey");
+                    
+
+                } else {
+                    $(".clickable").prop('disabled', false);
+                    $(".clickable").removeClass("grey");
+                    $(".indeterminate").hide();
+                    document.getElementById('yehdownprogress').innerHTML = "";
+                }
+            }
+            loadContext();
+            progressReport();
+            var intervalId = window.setInterval(function () {
+                /// call your function here
+                progressReport();
+            }, 10000);
+
+            function checkOnline(isOnline) {
+                if (isOnline >= 0) {
+                    console.log("Downloader Online")
+                    handleClickable(100, "Downloader is Online, Please input the URL and hit the find button on top");
+                    $(".downloadFolderClass").removeClass("grey");
+                    $(".downloadFolderClass").addClass("green");
+
+                    M.Toast.dismissAll();
+                } else {
+                    console.log("Downloader Offline")
+                    handleClickable(1, "Scanning downloader availability ..., Please click on Yehdown applicaton on your PC");
+                    $(".downloadFolderClass").removeClass("green");
+                }
+            }
+            // includeHTML();
+
+            function errHanlder(XMLHttpRequest, textStatus, errorThrown) {
+                M.toast({ html: 'Downloader is Offline,  Please click on Yehdown applicaton icon on your PC' });
+            }
+
+
+
+        </script>
+
+
+</body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TQH6549" height="0" width="0"
+        style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+</html>

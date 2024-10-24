@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en"
+    style="height: 100vh; ;width: 100wh;max-height: 100vh; ;max-width: 100wh;vertical-align:top;margin:0px;overflow: hidden;">
+
+<head>
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-6894117981675801",
+            enable_page_level_ads: true
+        });
+    </script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
+    <title>Social Me , Talk the way you are </title>
+    <meta name="google-site-verification" content="VGeiX1MQWV_nDhWTxRzOze29Wkk_IFZdDKO0gpFl_dg" />
+    <meta name="description"
+        content="anonymous chat  talk , a new way to talk with peoples, friends, teaching of words has reached to a new innovative way">
+
+    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128865649-1"></script>
+    <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag("js", new Date()); gtag("config", "UA-128865649-1", { "linker": { "domains": ["anonymouse.yehigo.com", "chat.yehigo.com", "talk.yehigo.com", "yehigo.com"] } });</script>
+</head>
+
+
+<!------------------------------>
+<style>
+    .show {
+        z-index: 999;
+        display: none;
+    }
+
+    .show .overlay {
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, .66);
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .show .img-show {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .img-show span {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 99;
+        cursor: pointer;
+    }
+
+    .img-show img {
+        max-width: 100%;
+        height: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /*End style*/
+
+    .typeWriter {
+        margin: 10px 0 0 10px;
+        width: 30em;
+        white-space: nowrap;
+        animation: type 2s steps(300, end);
+    }
+
+    @keyframes type {
+        from {
+            width: 30%;
+        }
+    }
+</style>
+
+<body style="height: 100%;width: 100% ;overflow: hidden;vertical-align:top">
+    <div id="preloader" class=" preloader"
+        style="height:100%;width: 100%;overflow: hidden;z-index: 100 ;position: absolute;background:transparent">
+        <canvas id="c1" style="background: transparent;height:100%;width: 100%"> </canvas>
+        <div style="background:transparent;height:100%;width: 100%;position:absolute;z-index:150;top:0px;">
+            <div class="flow-text center" style="color: red;height: 100%; width: 100%;top: 45%;position: relative;">
+                <p id="preloader_p" style="color: red; width: 100%; position: relative"> Diving into the deep universe</p>
+
+                <div class="row center">
+                    <a href="//yehigo.com" id="download-button"
+                        class="btn-large  bold waves-effect waves-light pulse  blue-grey darken-4">Go to Yehigo.com</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!------------------------------>
+
+    <script>
+        var YeahMSG = null;
+
+        let canvas = document.getElementById('c1');
+        let c = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        function speedDown() {
+            if (speed < 0.008) speed = 0.008;
+            else if (speed < 2) speed /= 1.1;
+            else speed = 0.01;
+        }
+
+        function speedUp() {
+            if (speed < 0.008) speed = 0.008;
+            else if (speed < 1) speed *= 1.1;
+
+            else speed = 1;
+        }
+        class Star {
+            constructor() {
+                this.x = Math.random() * canvas.width - canvas.width / 2;
+                this.y = Math.random() * canvas.height - canvas.height / 2;
+                this.px, this.py;
+                this.z = Math.random() * 4;
+                var rancolor = Math.random();
+                this.style = `rgb(${Math.floor(rancolor * 2392494) % 256}, ${Math.floor(rancolor * 392) % 256}, ${Math.floor(rancolor * 493493) % 256})`;
+
+            }
+            update() {
+                this.px = this.x;
+                this.py = this.y;
+                this.z += speed;
+                this.x += this.x * (speed * 0.2) * this.z;
+                this.y += this.y * (speed * 0.2) * this.z;
+                if (this.x > canvas.width / 2 + 50 || this.x < -canvas.width / 2 - 50 ||
+                    this.y > canvas.height / 2 + 50 || this.y < -canvas.height / 2 - 50) {
+                    this.x = Math.random() * canvas.width - canvas.width / 4;
+                    this.y = Math.random() * canvas.height - canvas.height / 4;
+                    this.px = this.x;
+                    this.py = this.y;
+                    this.z = 0;
+
+                }
+            }
+            show() {
+                c.lineWidth = this.z;
+                c.beginPath();
+                c.moveTo(this.x, this.y);
+                c.lineTo(this.px, this.py);
+
+                c.strokeStyle = this.style;
+                c.stroke();
+
+            }
+
+        }
+        let speed = 0.03;
+        let stars = [];
+        for (let i = 0; i < 200; i++) stars.push(new Star());
+        c.fillStyle = 'rgba(0, 0, 0, 0.4)';
+
+
+        c.translate(canvas.width / 2, canvas.height / 2);
+        var remove = -1;
+        function draw() {
+
+            if (remove == 0) speedDown();
+            else if (remove == 1) return 1;
+
+            requestAnimationFrame(draw);
+            c.fillRect(-canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
+
+            for (let s of stars) {
+                s.update();
+                s.show();
+            }
+
+        }
+
+        function start_preloader() {
+            draw();
+            var prel = document.getElementById("preloader_p");
+            if (typeof YGoScript !== 'undefined') {
+                prel.style.color = "GREEN";
+                txt = '<br>Landing station found : ' + YGoScript.Model() + navigator.platform + "<br>Platform : " + YGoScript.Brand() + YGoScript.YehIGoVersion();
+                txt += '<br>Please Wait a while, We are initalizing the setup';
+                prel.innerHTML += txt;
+                prel.classList.add("typeWriter");
+            }
+            else {
+                //prel.innerHTML += "<br/>landing station found :"+navigator.platform;
+                txt = '<br>Landing station found : ' + navigator.platform + "<br>Platform : " + navigator.appName;
+                txt += '<br>Permission denied '
+                prel.innerHTML += txt;
+                prel.classList.add("typeWriter");
+
+
+                // prel.innerHTML += "<br/>"+navigator.appName;
+            }
+        }
+        start_preloader();
+        function removeCanvase() {
+            remove = 1;
+            canvas.remove();
+            canvas = null;
+            stars = [];
+
+        }
+
+    </script>
+
+    <script>
+
+
+        var ts;
+        $(document).bind('touchstart', function (e) {
+            ts = e.originalEvent.touches[0].clientY;
+        });
+
+        $(document).bind('touchend', function (e) {
+            var te = e.originalEvent.changedTouches[0].clientY;
+            if (ts > te + 5) {
+                speedDown();
+            } else if (ts < te - 5) {
+                speedUp();
+            }
+        });
+
+        $(".preloader").bind('mousewheel', function (event) {
+            if (event.originalEvent.wheelDelta >= 0) {
+                speedUp()
+            }
+            else {
+                speedDown();
+            }
+        });
+
+        function preloaderClose() {
+            remove = 0;
+            setTimeout(function () {
+                $('.preloader').fadeOut("slow", "swing", function () {
+                    // removeCanvase();
+                    postload();
+                });
+            }, 300);
+        }
+
+        const typeWriterOp = {
+            add: "add",
+            erase: "erase",
+            none: "none"
+        }
+
+        let preloader_pTop = 0;
+
+        class typeWriter {
+            activeOp = typeWriterOp.none;
+            constructor() {
+                this.activeOp = typeWriterOp.none;
+            }
+            addText(elementId, text, delay = 50) {
+                this.activeOp = typeWriterOp.add;
+                const self = this;
+                let i = 0;
+                const targetElement = document.getElementById(elementId);
+                function type() {
+                    let tl = text.length;
+                    if (i < tl) {
+                        if (text.charAt(i) == "<" && tl - i > 3) {
+                            let br = text.substring(i, i + 4);
+                            if (br == "<br>") {
+                                targetElement.parentElement.style.top = -(++preloader_pTop)+'em';
+                        
+                                targetElement.innerHTML += br;
+                                i += 4;
+                            } else {
+                                targetElement.innerHTML += text.charAt(i);
+                                i++;
+                            }
+                        } else {
+                            targetElement.innerHTML += text.charAt(i);
+                            i++;
+                        }
+                        setTimeout(type, delay);
+                    } else {
+                        self.activeOp = typeWriterOp.none;
+                    }
+                }
+                type();
+            }
+
+            removeText(elementId, delay = 50) {
+                this.activeOp = typeWriterOp.erase;
+                const targetElement = document.getElementById(elementId);
+                let text = targetElement.textContent;
+                const self = this;
+                function erase() {
+                    if (text.length > 0) {
+                        text = text.slice(0, -1);
+                        targetElement.innerHTML = text;
+                        setTimeout(erase.bind(classObj), delay);
+                    } else {
+                        self.activeOp = typeWriterOp.none;
+                    }
+                }
+
+                erase();
+            }
+
+            freshWrite(elementId, eraseDelay, text, typeDelay) {
+                this._typeWords(elementId, eraseDelay, text, typeDelay, [typeWriterOp.erase, typeWriterOp.add])
+            }
+
+            appendWrite(elementId, text, typeDelay) {
+                this._typeWords(elementId, 1, text, typeDelay, [typeWriterOp.add])
+            }
+
+            _typeWords(elementId, eraseDelay, text, typeDelay, opQueue) {
+                const self = this;
+                if(self.activeOp == undefined || opQueue == undefined ) return; //TODO: how is this bug?
+                if (opQueue[0] == "erase" && self.activeOp == typeWriterOp.none) {
+                    self.removeText(elementId, eraseDelay);
+                    opQueue.shift()
+                }
+                if (opQueue[0] == "add" && self.activeOp == typeWriterOp.none) {
+                    self.addText(elementId, text, typeDelay);
+                    opQueue.shift()
+                }
+                if (opQueue.length == 0 || opQueue == undefined ) {
+                    //exit
+                } else {
+                    setTimeout(self._typeWords.bind(elementId, eraseDelay, text, typeDelay, opQueue), 500);
+                }
+
+            }
+        }
+        var typeWriter_ = new typeWriter();
+    </script>
+    <!--  Scripts-->
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+
+</body>
+
+</html>
