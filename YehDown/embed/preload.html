@@ -4,13 +4,7 @@
 
 <head>
 
-    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({
-            google_ad_client: "ca-pub-6894117981675801",
-            enable_page_level_ads: true
-        });
-    </script>
+
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
     <title>Social Me , Talk the way you are </title>
@@ -27,9 +21,7 @@
     <!-- CSS  -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128865649-1"></script>
-    <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag("js", new Date()); gtag("config", "UA-128865649-1", { "linker": { "domains": ["anonymouse.yehigo.com", "chat.yehigo.com", "talk.yehigo.com", "yehigo.com"] } });</script>
-</head>
+ </head>
 
 
 <!------------------------------>
@@ -96,8 +88,8 @@
                 <p id="preloader_p" style="color: red; width: 100%; position: relative"> Diving into the deep universe</p>
 
                 <div class="row center">
-                    <a href="//yehigo.com" id="download-button"
-                        class="btn-large  bold waves-effect waves-light pulse  blue-grey darken-4">Go to Yehigo.com</a>
+                    <a href="#" id="download-button"
+                        class="btn-large  bold waves-effect waves-light pulse  blue-grey darken-4">Initializing setup... Please wait.</a>
                 </div>
             </div>
 
@@ -191,7 +183,7 @@
             if (typeof YGoScript !== 'undefined') {
                 prel.style.color = "GREEN";
                 txt = '<br>Landing station found : ' + YGoScript.Model() + navigator.platform + "<br>Platform : " + YGoScript.Brand() + YGoScript.YehIGoVersion();
-                txt += '<br>Please Wait a while, We are initalizing the setup';
+                txt += '<br>Setting up necessary components for your download.';
                 prel.innerHTML += txt;
                 prel.classList.add("typeWriter");
             }
@@ -277,7 +269,7 @@
                         if (text.charAt(i) == "<" && tl - i > 3) {
                             let br = text.substring(i, i + 4);
                             if (br == "<br>") {
-                                targetElement.parentElement.style.top = -(++preloader_pTop)+'em';
+                                //targetElement.parentElement.style.top = -(++preloader_pTop)+'em';
                         
                                 targetElement.innerHTML += br;
                                 i += 4;
@@ -346,9 +338,16 @@
     </script>
     <!--  Scripts-->
 
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-6894117981675801",
+            enable_page_level_ads: true
+        });
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128865649-1"></script>
+    <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag("js", new Date()); gtag("config", "UA-128865649-1", { "linker": { "domains": ["anonymouse.yehigo.com", "chat.yehigo.com", "talk.yehigo.com", "yehigo.com"] } });</script>
 
 </body>
 
