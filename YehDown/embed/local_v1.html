@@ -165,6 +165,7 @@
             <div class="progress transparent" style="height:25px; position: relative;top: 0; margin-top: 0px; ">
                 <div class="indeterminate" id="yehdownindeterminate"></div>
                 <div class="determinate green" id="yehdownprogress" style="width: 70%"></div>
+                <div  id="yehdownprogressInfo" ></div>
                 <div class="indeterminate green lighten-4" id="yehdownindeterminat"></div>
             </div>
         </div>
@@ -419,9 +420,9 @@
                 );
             }
 
-            function setProgress(progress) {
+            function setProgress(progress, message) {
                 document.getElementById('yehdownprogress').style.width = progress + '%';
-                handleClickable(progress);
+                handleClickable(progress, message);
             }
 
             function YehDownExecutior(cmd, success, failure) {
@@ -461,7 +462,9 @@
                 if (progress > 0 && progress < 100) {
                     $(".indeterminate").show();
                     $(".clickable").prop('disabled', true);
-                    document.getElementById('yehdownprogress').innerHTML = message;
+                    var msgToShow = "["+progress+"]:"+ message;
+                    document.getElementById('yehdownprogress').innerHTML = msgToShow;
+                    document.getElementById('yehdownprogressInfo').innerHTML = msgToShow;
                     $(".clickable").addClass("grey");
                     
 
@@ -469,7 +472,8 @@
                     $(".clickable").prop('disabled', false);
                     $(".clickable").removeClass("grey");
                     $(".indeterminate").hide();
-                    document.getElementById('yehdownprogress').innerHTML = "";
+                    document.getElementById('yehdownprogress').innerHTML = message;
+                    document.getElementById('yehdownprogressInfo').innerHTML = message;
                 }
             }
             loadContext();
@@ -479,8 +483,12 @@
                 progressReport();
             }, 10000);
 
+            var pre_Online_report = -1;
             function checkOnline(isOnline) {
                 if (isOnline >= 0) {
+                    if(pre_Online_report>=0) {
+                        return;
+                    }
                     console.log("Downloader Online")
                     handleClickable(100, "Downloader is Online, Please input the URL and hit the find button on top");
                     $(".downloadFolderClass").removeClass("grey");
@@ -492,6 +500,7 @@
                     handleClickable(1, "Scanning downloader availability ..., Please click on Yehdown applicaton on your PC");
                     $(".downloadFolderClass").removeClass("green");
                 }
+                pre_Online_report = isOnline;
             }
             // includeHTML();
 
