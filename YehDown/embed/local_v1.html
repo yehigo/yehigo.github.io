@@ -164,7 +164,7 @@
             </nav>
             <div class="progress transparent" style="height:25px; position: relative;top: 0; margin-top: 0px; ">
                 <div class="indeterminate" id="yehdownindeterminate"></div>
-                <div class="determinate green" id="yehdownprogress" style="width: 70%"></div>
+                <div class="determinate green" id="yehdownprogress" style="width: 70% opacity: 0.5;"></div>
                 <div  id="yehdownprogressInfo" ></div>
                 <div class="indeterminate green lighten-4" id="yehdownindeterminat"></div>
             </div>
@@ -463,7 +463,7 @@
                     $(".indeterminate").show();
                     $(".clickable").prop('disabled', true);
                     var msgToShow = "["+progress+"]:"+ message;
-                    document.getElementById('yehdownprogress').innerHTML = msgToShow;
+                    //document.getElementById('yehdownprogress').innerHTML = msgToShow;
                     document.getElementById('yehdownprogressInfo').innerHTML = msgToShow;
                     $(".clickable").addClass("grey");
                     
@@ -472,7 +472,7 @@
                     $(".clickable").prop('disabled', false);
                     $(".clickable").removeClass("grey");
                     $(".indeterminate").hide();
-                    document.getElementById('yehdownprogress').innerHTML = message;
+                    //document.getElementById('yehdownprogress').innerHTML = message;
                     document.getElementById('yehdownprogressInfo').innerHTML = message;
                 }
             }
