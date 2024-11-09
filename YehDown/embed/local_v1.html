@@ -402,7 +402,12 @@
                 YehDownExecutior({ "command": "getProgress", "zlukey": "yehigo" },
                     function (response) {
                         var report = response.result;
-                        setProgress(report);
+                        var context = response.context;
+                        var message = undefined;
+                        if(context != undefined) {
+                            message = context.dDebugMessage;
+                        }
+                        setProgress(report, message);
                         checkOnline(report);
                         gaHelper('send', 'event', 'yehdown', 'progress', 1);
                     },
