@@ -19,9 +19,10 @@ https://blog.yehigo.com ![GitHub commits](https://badgen.net/github/commits/yehi
 
 
 # 📊 GitHub Stats:
-![Streak](https://github-readme-streak-stats.herokuapp.com/?user=meenapintu&theme=radical)
+![Streak](https://github-readme-streak-stats.herokuapp.com/?user=meenapintu&theme=radical )
 ![Your Repository’s Stats](https://github-readme-stats.vercel.app/api?username=meenapintu&show_icons=true&theme=radical)
-![Your Repository's Stats](https://github-readme-stats.vercel.app/api/top-langs/?username=meenapintu&theme=radical)
+![Your Repository's Stats](https://github-readme-stats.vercel.app/api/top-langs/?username=meenapintu&theme=radical&exclude_repo=Jefto&show_icons=true)
+
 
 
 ## 🏆 GitHub Trophies
