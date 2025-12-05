@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kineti Privacy Center</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Font Awesome for Icons (No SVG usage) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chosen Palette: Warm Neutrals (Background) with Kineti Brand Accents (Teal/Blue/Indigo) -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        neutral: {
+                            50: '#fafaf9',
+                            100: '#f5f5f4',
+                            200: '#e7e5e4',
+                            800: '#292524',
+                            900: '#1c1917',
+                        },
+                        brand: {
+                            light: '#2dd4bf', // Teal 400
+                            DEFAULT: '#0f766e', // Teal 700
+                            dark: '#111827', // Gray 900
+                            accent: '#8b5cf6', // Violet 500
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #fafaf9; /* neutral-50 */
+            color: #1c1917; /* neutral-900 */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        /* Custom scrollbar for text areas */
+        .custom-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 4px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af;
+        }
+        
+        /* Flow Diagram Styles using CSS borders/pseudo-elements (No SVG) */
+        .flow-line {
+            position: absolute;
+            background-color: #e5e7eb;
+            z-index: 0;
+        }
+        .flow-arrow::after {
+            content: '▼';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #9ca3af;
+            font-size: 12px;
+        }
+    </style>
+    <!-- 
+    Application Structure Plan:
+    1.  **Header:** Clean branding, setting the tone of transparency.
+    2.  **Hero Section:** "The Privacy Promise" - A high-level summary of the E2EE commitment.
+    3.  **Data Journey Interactive Diagram:** A functional CSS-based flow diagram visualizing the difference between Encrypted Chat (Internal/Private) and AI Generation (External/Processed). This helps users understand *where* their data goes.
+    4.  **Data Collection Dashboard:** A tabbed interface breaking down the policy's Section 2 (Direct, Service, AI data). Users click to reveal details, preventing text overload.
+    5.  **Retention Visualization (Chart.js):** A bar chart comparing data lifespans (e.g., Messages = 0 days vs Account Info = Lifetime). This visualizes Section 5.
+    6.  **Transparency Matrix (Sharing):** A grid layout explaining Section 4, showing exactly who gets what (AI Provider vs Other Users vs Law).
+    7.  **User Controls & Footer:** Actionable summary of rights (Section 6) and contact info.
+    
+    Why this structure?
+    Privacy policies are dense. This layout turns the policy into a narrative: "Here is your promise, here is how data flows, here is what we keep, and here is how you control it."
+    -->
+    
+    <!-- 
+    Visualization & Content Choices:
+    1.  **Data Journey Flow (HTML/CSS):**
+        * Goal: Explain the dual nature of the app (Private Chat vs AI).
+        * Viz: CSS-connected nodes.
+        * Interaction: Hover effects to highlight paths.
+        * Justification: Users confuse E2EE with AI processing. A visual path clarifies that AI prompts *leave* the device while chats *stay* encrypted.
+    2.  **Retention Chart (Chart.js):**
+        * Goal: Visualize Section 5 (Data Retention).
+        * Viz: Horizontal Bar Chart.
+        * Interaction: Tooltips showing the exact deletion trigger (e.g., "Upon Delivery").
+        * Justification: "Immediate deletion" is a strong selling point; a chart with a near-zero bar for messages emphasizes this visually against the longer bars for account info.
+    3.  **Collection Tabs (Vanilla JS):**
+        * Goal: Organize Section 2.
+        * Viz: Clickable tabs changing content cards.
+        * Justification: Prevents wall-of-text. Allows user to explore categories (Identity, Tech, AI) at their own pace.
+    -->
+    
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+</head>
+<body class="font-sans antialiased selection:bg-brand-light selection:text-white">
+
+    <!-- Navigation / Header -->
+    <nav class="w-full bg-white border-b border-neutral-200 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-gradient-to-br from-brand to-brand-light rounded-lg flex items-center justify-center text-white font-bold text-lg">K</div>
+                    <span class="font-bold text-xl tracking-tight text-neutral-900">Kineti <span class="text-neutral-400 font-normal">Privacy Center</span></span>
+                </div>
+                <div class="hidden md:flex items-center gap-6 text-sm font-medium text-neutral-600">
+                    <a href="#promise" class="hover:text-brand transition-colors">Promise</a>
+                    <a href="#data-flow" class="hover:text-brand transition-colors">Data Flow</a>
+                    <a href="#collection" class="hover:text-brand transition-colors">Collection</a>
+                    <a href="#retention" class="hover:text-brand transition-colors">Retention</a>
+                </div>
+                <div class="text-xs text-neutral-400">Effective: Dec 5, 2025</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="promise" class="max-w-4xl mx-auto px-4 py-16 text-center">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-neutral-900 mb-6 tracking-tight">
+            Your Creativity is Public.<br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand to-brand-accent">Your Chats are Private.</span>
+        </h1>
+        <p class="text-lg text-neutral-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+            Kineti is built on the <strong>Signal Protocol</strong>. This means we literally cannot read your messages. 
+            However, to create AI videos, some data must briefly leave your device. This interactive guide explains exactly how that works.
+        </p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto mt-12">
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-neutral-200 flex flex-col items-center">
+                <i class="fa-solid fa-lock text-3xl text-brand mb-3"></i>
+                <h3 class="font-bold text-neutral-900">E2E Encrypted</h3>
+                <p class="text-xs text-neutral-500 mt-1">Chats & Voice Notes</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-neutral-200 flex flex-col items-center">
+                <i class="fa-solid fa-wand-magic-sparkles text-3xl text-brand-accent mb-3"></i>
+                <h3 class="font-bold text-neutral-900">AI Powered</h3>
+                <p class="text-xs text-neutral-500 mt-1">Text-to-Video Prompts</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-neutral-200 flex flex-col items-center">
+                <i class="fa-solid fa-user-shield text-3xl text-neutral-700 mb-3"></i>
+                <h3 class="font-bold text-neutral-900">Zero Selling</h3>
+                <p class="text-xs text-neutral-500 mt-1">We don't sell your data</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- SECTION 1: The Data Journey (Visual Flow) -->
+    <section id="data-flow" class="bg-white border-y border-neutral-200 py-16">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="mb-10 text-center">
+                <h2 class="text-2xl font-bold text-neutral-900">Where Does Your Data Go?</h2>
+                <p class="text-neutral-600 mt-2">Follow the path of your data based on what you are doing.</p>
+            </div>
+
+            <!-- CSS Grid Diagram -->
+            <div class="relative bg-neutral-50 rounded-2xl p-8 border border-neutral-200 overflow-hidden">
+                <!-- Toggle Controls -->
+                <div class="flex justify-center mb-8 gap-4">
+                    <button onclick="highlightPath('chat')" id="btn-chat" class="px-6 py-2 rounded-full bg-brand text-white font-semibold text-sm shadow-md transition-all hover:bg-brand-dark ring-2 ring-offset-2 ring-brand">
+                        <i class="fa-regular fa-comment-dots mr-2"></i> Sending a Message
+                    </button>
+                    <button onclick="highlightPath('ai')" id="btn-ai" class="px-6 py-2 rounded-full bg-white text-neutral-600 border border-neutral-300 font-semibold text-sm shadow-sm transition-all hover:bg-neutral-100">
+                        <i class="fa-solid fa-film mr-2"></i> Generating AI Video
+                    </button>
+                </div>
+
+                <!-- Diagram Nodes -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 relative z-10 text-center">
+                    
+                    <!-- Node 1: User -->
+                    <div class="flex flex-col items-center">
+                        <div class="w-16 h-16 bg-neutral-800 rounded-full flex items-center justify-center text-white text-2xl mb-4 shadow-lg z-20 relative">
+                            <i class="fa-solid fa-mobile-screen"></i>
+                        </div>
+                        <h4 class="font-bold text-sm">Your Device</h4>
+                        <p class="text-xs text-neutral-500 mt-1">Data Origin</p>
+                    </div>
+
+                    <!-- Flow Lines Mobile (Vertical) / Desktop (Horizontal) handled visually via CSS classes toggled by JS -->
+
+                    <!-- Node 2: Kineti Server -->
+                    <div class="flex flex-col items-center relative">
+                        <!-- Connecting Line Left -->
+                        <div class="hidden md:block absolute top-8 -left-1/2 w-full h-1 bg-neutral-200 transition-colors duration-500" id="line-1"></div>
+                        
+                        <div class="w-16 h-16 bg-white border-2 border-neutral-300 rounded-lg flex items-center justify-center text-neutral-700 text-2xl mb-4 shadow-sm z-20 relative transition-colors duration-300" id="node-server">
+                            <i class="fa-solid fa-server"></i>
+                        </div>
+                        <h4 class="font-bold text-sm">Kineti Server</h4>
+                        <p class="text-xs text-neutral-500 mt-1 transition-all duration-300" id="text-server">Routing Only</p>
+                    </div>
+
+                    <!-- Node 3: AI Provider -->
+                    <div class="flex flex-col items-center relative">
+                        <!-- Connecting Line Left -->
+                        <div class="hidden md:block absolute top-8 -left-1/2 w-full h-1 bg-neutral-200 transition-colors duration-500" id="line-2"></div>
+
+                        <div class="w-16 h-16 bg-white border-2 border-neutral-300 rounded-lg flex items-center justify-center text-neutral-700 text-2xl mb-4 shadow-sm z-20 relative transition-colors duration-300" id="node-ai">
+                            <i class="fa-solid fa-robot"></i>
+                        </div>
+                        <h4 class="font-bold text-sm">AI Partner</h4>
+                        <p class="text-xs text-neutral-500 mt-1 transition-all duration-300" id="text-ai">Video Generation</p>
+                    </div>
+
+                    <!-- Node 4: Recipient -->
+                    <div class="flex flex-col items-center relative">
+                        <!-- Connecting Line Left -->
+                        <div class="hidden md:block absolute top-8 -left-1/2 w-full h-1 bg-neutral-200 transition-colors duration-500" id="line-3"></div>
+
+                        <div class="w-16 h-16 bg-neutral-800 rounded-full flex items-center justify-center text-white text-2xl mb-4 shadow-lg z-20 relative">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <h4 class="font-bold text-sm">Recipient</h4>
+                        <p class="text-xs text-neutral-500 mt-1">End Point</p>
+                    </div>
+                </div>
+
+                <!-- Explanation Box -->
+                <div id="flow-explanation" class="mt-8 p-4 bg-brand-light/10 border border-brand-light/30 rounded-lg text-sm text-neutral-700 max-w-2xl mx-auto text-center transition-all duration-300">
+                    <span class="font-bold text-brand block mb-1"><i class="fa-solid fa-lock"></i> Chat Mode Selected</span>
+                    Your message is encrypted on your device. It passes through our server as "gibberish" (ciphertext). We cannot read it. It is decrypted only on the Recipient's device.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: Data Collection Dashboard -->
+    <section id="collection" class="max-w-6xl mx-auto px-4 py-16">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Left: Sidebar / Menu -->
+            <div class="lg:col-span-1 space-y-2">
+                <h2 class="text-2xl font-bold text-neutral-900 mb-6">What We Collect</h2>
+                <p class="text-sm text-neutral-600 mb-6">We practice data minimization. Select a category to see exactly what is stored.</p>
+                
+                <button onclick="showCollection('direct')" id="tab-direct" class="w-full text-left px-5 py-4 rounded-xl flex items-center justify-between bg-white shadow-md border-l-4 border-brand transition-all">
+                    <span class="font-semibold text-neutral-800">Directly Provided</span>
+                    <i class="fa-solid fa-chevron-right text-xs text-neutral-400"></i>
+                </button>
+                <button onclick="showCollection('service')" id="tab-service" class="w-full text-left px-5 py-4 rounded-xl flex items-center justify-between bg-neutral-50 hover:bg-white border-l-4 border-transparent transition-all">
+                    <span class="font-semibold text-neutral-600">Service Metadata</span>
+                    <i class="fa-solid fa-chevron-right text-xs text-neutral-400"></i>
+                </button>
+                <button onclick="showCollection('ai_data')" id="tab-ai_data" class="w-full text-left px-5 py-4 rounded-xl flex items-center justify-between bg-neutral-50 hover:bg-white border-l-4 border-transparent transition-all">
+                    <span class="font-semibold text-neutral-600">AI Creation Data</span>
+                    <i class="fa-solid fa-chevron-right text-xs text-neutral-400"></i>
+                </button>
+            </div>
+
+            <!-- Right: Content Display -->
+            <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-neutral-200 p-8 min-h-[300px]">
+                
+                <!-- Content: Direct -->
+                <div id="content-direct" class="collection-content">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="p-2 bg-blue-100 text-blue-600 rounded-lg"><i class="fa-solid fa-id-card"></i></div>
+                        <h3 class="text-xl font-bold text-neutral-900">Information You Provide</h3>
+                    </div>
+                    <ul class="space-y-4">
+                        <li class="flex gap-4">
+                            <i class="fa-solid fa-check text-green-500 mt-1"></i>
+                            <div>
+                                <strong class="block text-neutral-800">Mobile Number</strong>
+                                <span class="text-sm text-neutral-500">Your unique identifier (stored as INTEGER). Essential for account creation.</span>
+                            </div>
+                        </li>
+                        <li class="flex gap-4">
+                            <i class="fa-solid fa-check text-green-500 mt-1"></i>
+                            <div>
+                                <strong class="block text-neutral-800">Profile Data</strong>
+                                <span class="text-sm text-neutral-500">Username and Avatar/Photo. This is visible to users you chat with.</span>
+                            </div>
+                        </li>
+                        <li class="flex gap-4">
+                            <i class="fa-solid fa-key text-yellow-500 mt-1"></i>
+                            <div>
+                                <strong class="block text-neutral-800">Public Keys</strong>
+                                <span class="text-sm text-neutral-500">Your Identity Key and PreKey Bundles. We host these so others can encrypt messages to you. <strong>We do NOT have your Private Keys.</strong></span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Content: Service -->
+                <div id="content-service" class="collection-content hidden">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="p-2 bg-purple-100 text-purple-600 rounded-lg"><i class="fa-solid fa-network-wired"></i></div>
+                        <h3 class="text-xl font-bold text-neutral-900">Service Metadata</h3>
+                    </div>
+                    <p class="text-sm text-neutral-600 mb-4 bg-yellow-50 p-3 rounded-lg border border-yellow-100"><i class="fa-solid fa-circle-info mr-2"></i>Metadata is information <em>about</em> the message, not the message content itself.</p>
+                    <ul class="space-y-4">
+                        <li class="flex gap-4">
+                            <i class="fa-solid fa-check text-green-500 mt-1"></i>
+                            <div>
+                                <strong class="block text-neutral-800">Routing Info</strong>
+                                <span class="text-sm text-neutral-500">Timestamps, Sender ID, and Recipient ID to deliver the packet.</span>
+                            </div>
+                        </li>
+                        <li class="flex gap-4">
+                            <i class="fa-solid fa-check text-green-500 mt-1"></i>
+                            <div>
+                                <strong class="block text-neutral-800">Queue Data</strong>
+                                <span class="text-sm text-neutral-500">If a recipient is offline, we hold the encrypted blob temporarily to deliver it when they connect.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Content: AI Data -->
+                <div id="content-ai_data" class="collection-content hidden">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="p-2 bg-indigo-100 text-indigo-600 rounded-lg"><i class="fa-solid fa-film"></i></div>
+                        <h3 class="text-xl font-bold text-neutral-900">AI Creation Data</h3>
+                    </div>
+                    <div class="bg-indigo-50 border border-indigo-100 p-4 rounded-lg mb-4">
+                        <h4 class="font-bold text-indigo-900 text-sm mb-1">Crucial Distinction</h4>
+                        <p class="text-xs text-indigo-800">Unlike chats, AI prompts must be processed. They are <strong>not</strong> E2E encrypted while being processed by the AI model.</p>
+                    </div>
+                    <ul class="space-y-4">
+                        <li class="flex gap-4">
+                            <i class="fa-solid fa-check text-green-500 mt-1"></i>
+                            <div>
+                                <strong class="block text-neutral-800">AI Prompts</strong>
+                                <span class="text-sm text-neutral-500">The text you type (e.g., "A futuristic city at sunset") is sent to our AI provider.</span>
+                            </div>
+                        </li>
+                        <li class="flex gap-4">
+                            <i class="fa-solid fa-check text-green-500 mt-1"></i>
+                            <div>
+                                <strong class="block text-neutral-800">Generated Media</strong>
+                                <span class="text-sm text-neutral-500">The resulting video/image is stored on our servers so you can view and share it.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: Data Retention Chart -->
+    <section id="retention" class="bg-neutral-50 border-y border-neutral-200 py-16">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-2xl font-bold text-neutral-900 mb-8 text-center">How Long We Keep Data</h2>
+            
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-neutral-200">
+                <div class="chart-container">
+                    <canvas id="retentionChart"></canvas>
+                </div>
+                <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 text-center text-xs text-neutral-500">
+                    <div>
+                        <strong class="block text-neutral-900 text-sm">Messages</strong>
+                        Deleted immediately upon delivery.
+                    </div>
+                    <div>
+                        <strong class="block text-neutral-900 text-sm">Undelivered Queue</strong>
+                        Deleted after 30 days if user never connects.
+                    </div>
+                    <div>
+                        <strong class="block text-neutral-900 text-sm">Account Info</strong>
+                        Kept while account is active. Deleted 90 days after closure.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: Sharing & Rights -->
+    <section class="max-w-6xl mx-auto px-4 py-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            
+            <!-- Who sees what -->
+            <div>
+                <h3 class="text-xl font-bold text-neutral-900 mb-6">Who Sees Your Data?</h3>
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between p-4 bg-white border border-neutral-200 rounded-lg">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-robot text-neutral-400"></i>
+                            <span class="font-medium text-neutral-700">AI Model Provider</span>
+                        </div>
+                        <span class="text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-1 rounded">Prompts Only</span>
+                    </div>
+                    <div class="flex items-center justify-between p-4 bg-white border border-neutral-200 rounded-lg">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-users text-neutral-400"></i>
+                            <span class="font-medium text-neutral-700">Other Users</span>
+                        </div>
+                        <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded">Profile & Public Keys</span>
+                    </div>
+                    <div class="flex items-center justify-between p-4 bg-white border border-neutral-200 rounded-lg opacity-50">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-bullhorn text-neutral-400"></i>
+                            <span class="font-medium text-neutral-700">Advertisers</span>
+                        </div>
+                        <span class="text-xs font-bold text-neutral-500 bg-neutral-100 px-2 py-1 rounded">NEVER</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rights -->
+            <div>
+                <h3 class="text-xl font-bold text-neutral-900 mb-6">Your Rights</h3>
+                <div class="bg-brand-light/5 border border-brand-light/20 rounded-xl p-6">
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-trash-can text-brand mt-1"></i>
+                            <div>
+                                <strong class="text-neutral-900 text-sm">Delete Account</strong>
+                                <p class="text-xs text-neutral-600">You can nuclear delete your account in Settings. This wipes your keys, profile, and queue.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-address-book text-brand mt-1"></i>
+                            <div>
+                                <strong class="text-neutral-900 text-sm">Sync Control</strong>
+                                <p class="text-xs text-neutral-600">You choose which contacts to sync. We hash numbers for privacy.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-ban text-brand mt-1"></i>
+                            <div>
+                                <strong class="text-neutral-900 text-sm">Block Users</strong>
+                                <p class="text-xs text-neutral-600">Stop anyone from contacting you. They won't know they are blocked.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-neutral-900 text-neutral-400 py-12">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <div class="w-12 h-12 bg-neutral-800 rounded-xl flex items-center justify-center text-white font-bold text-2xl mx-auto mb-6">K</div>
+            <p class="mb-6">YehiGo Technologies • Kineti App</p>
+            <div class="flex justify-center gap-6 text-sm mb-8">
+                <a href="#" class="hover:text-white transition-colors">Contact Support</a>
+                <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+            </div>
+            <p class="text-xs text-neutral-600">© 2025 YehiGo Technologies. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Logic -->
+    <script>
+        // --- 1. Data Flow Diagram Logic ---
+        function highlightPath(mode) {
+            // Reset Styles
+            const resetBtn = "bg-white text-neutral-600 border border-neutral-300 shadow-sm";
+            const activeBtn = "bg-brand text-white shadow-md ring-2 ring-offset-2 ring-brand border-transparent";
+            
+            // Nodes
+            const serverNode = document.getElementById('node-server');
+            const aiNode = document.getElementById('node-ai');
+            const serverText = document.getElementById('text-server');
+            const aiText = document.getElementById('text-ai');
+            const explanation = document.getElementById('flow-explanation');
+            
+            // Lines (Desktop only usually, but handled via logic)
+            const line1 = document.getElementById('line-1');
+            const line2 = document.getElementById('line-2');
+            const line3 = document.getElementById('line-3');
+
+            // Reset Colors
+            serverNode.className = "w-16 h-16 bg-white border-2 border-neutral-300 rounded-lg flex items-center justify-center text-neutral-700 text-2xl mb-4 shadow-sm z-20 relative transition-colors duration-300";
+            aiNode.className = "w-16 h-16 bg-white border-2 border-neutral-300 rounded-lg flex items-center justify-center text-neutral-700 text-2xl mb-4 shadow-sm z-20 relative transition-colors duration-300";
+            serverText.className = "text-xs text-neutral-500 mt-1 transition-all duration-300";
+            aiText.className = "text-xs text-neutral-500 mt-1 transition-all duration-300";
+            
+            line1.className = "hidden md:block absolute top-8 -left-1/2 w-full h-1 bg-neutral-200 transition-colors duration-500";
+            line2.className = "hidden md:block absolute top-8 -left-1/2 w-full h-1 bg-neutral-200 transition-colors duration-500";
+            line3.className = "hidden md:block absolute top-8 -left-1/2 w-full h-1 bg-neutral-200 transition-colors duration-500";
+
+            if (mode === 'chat') {
+                // Button State
+                document.getElementById('btn-chat').className = "px-6 py-2 rounded-full font-semibold text-sm transition-all " + activeBtn;
+                document.getElementById('btn-ai').className = "px-6 py-2 rounded-full font-semibold text-sm transition-all " + resetBtn;
+
+                // Path Highlighting: User -> Server -> Recipient (Skipping AI)
+                line1.classList.remove('bg-neutral-200'); line1.classList.add('bg-brand');
+                line3.classList.remove('bg-neutral-200'); line3.classList.add('bg-brand');
+                
+                // Server Node Active
+                serverNode.classList.remove('border-neutral-300', 'text-neutral-700');
+                serverNode.classList.add('border-brand', 'text-brand', 'bg-brand-light/10');
+                serverText.innerText = "Blind Routing";
+                serverText.classList.add('text-brand', 'font-bold');
+
+                // Recipient Node Active (implied by color)
+                
+                // AI Node Inactive (Fade)
+                aiNode.classList.add('opacity-40');
+                line2.classList.add('opacity-40');
+
+                // Explanation
+                explanation.className = "mt-8 p-4 bg-brand-light/10 border border-brand-light/30 rounded-lg text-sm text-neutral-700 max-w-2xl mx-auto text-center transition-all duration-300";
+                explanation.innerHTML = '<span class="font-bold text-brand block mb-1"><i class="fa-solid fa-lock"></i> Chat Mode Selected</span>Your message is encrypted on your device. It passes through our server as "gibberish" (ciphertext). We cannot read it. It is decrypted only on the Recipient\'s device.';
+
+            } else if (mode === 'ai') {
+                // Button State
+                document.getElementById('btn-chat').className = "px-6 py-2 rounded-full font-semibold text-sm transition-all " + resetBtn;
+                document.getElementById('btn-ai').className = "px-6 py-2 rounded-full font-semibold text-sm transition-all " + activeBtn;
+
+                // Path Highlighting: User -> Server -> AI (Skipping Recipient initially)
+                line1.classList.remove('bg-neutral-200'); line1.classList.add('bg-brand-accent');
+                line2.classList.remove('bg-neutral-200'); line2.classList.add('bg-brand-accent');
+                
+                // Server Node Active
+                serverNode.classList.remove('border-neutral-300', 'text-neutral-700');
+                serverNode.classList.add('border-brand-accent', 'text-brand-accent', 'bg-purple-50');
+                serverText.innerText = "Processing";
+
+                // AI Node Active
+                aiNode.classList.remove('border-neutral-300', 'text-neutral-700');
+                aiNode.classList.add('border-brand-accent', 'text-brand-accent', 'bg-purple-50');
+                aiText.classList.add('text-brand-accent', 'font-bold');
+
+                // Recipient Node Inactive
+                line3.classList.add('opacity-40');
+
+                // Explanation
+                explanation.className = "mt-8 p-4 bg-purple-50 border border-purple-200 rounded-lg text-sm text-neutral-700 max-w-2xl mx-auto text-center transition-all duration-300";
+                explanation.innerHTML = '<span class="font-bold text-brand-accent block mb-1"><i class="fa-solid fa-bolt"></i> AI Mode Selected</span>Your text prompt is sent to our AI provider to generate the video. The prompt is <strong>not</strong> E2E encrypted during generation, but the provider is contractually bound to privacy.';
+            }
+        }
+
+        // --- 2. Collection Dashboard Logic ---
+        function showCollection(id) {
+            // Reset Tabs
+            const tabs = ['direct', 'service', 'ai_data'];
+            tabs.forEach(tab => {
+                document.getElementById('tab-' + tab).className = "w-full text-left px-5 py-4 rounded-xl flex items-center justify-between bg-neutral-50 hover:bg-white border-l-4 border-transparent transition-all";
+                document.getElementById('tab-' + tab).querySelector('span').classList.remove('text-neutral-800');
+                document.getElementById('tab-' + tab).querySelector('span').classList.add('text-neutral-600');
+                document.getElementById('content-' + tab).classList.add('hidden');
+            });
+
+            // Activate Tab
+            const activeTab = document.getElementById('tab-' + id);
+            activeTab.className = "w-full text-left px-5 py-4 rounded-xl flex items-center justify-between bg-white shadow-md border-l-4 border-brand transition-all";
+            activeTab.querySelector('span').classList.remove('text-neutral-600');
+            activeTab.querySelector('span').classList.add('text-neutral-800');
+
+            // Show Content
+            document.getElementById('content-' + id).classList.remove('hidden');
+            document.getElementById('content-' + id).classList.add('animate-fade-in');
+        }
+
+        // --- 3. Chart.js Logic (Retention) ---
+        document.addEventListener('DOMContentLoaded', function() {
+            // Init Default Path
+            highlightPath('chat');
+
+            const ctx = document.getElementById('retentionChart').getContext('2d');
+            
+            // Data from Policy Section 5
+            const data = {
+                labels: ['Message Content', 'Undelivered Queue', 'AI History', 'Account Info'],
+                datasets: [{
+                    label: 'Retention Period',
+                    data: [0.1, 30, 90, 365], // 0.1 represents "Immediate"
+                    backgroundColor: [
+                        '#2dd4bf', // Teal (Brand Light)
+                        '#fbbf24', // Amber
+                        '#8b5cf6', // Violet
+                        '#1f2937'  // Dark Gray
+                    ],
+                    borderRadius: 6,
+                    barThickness: 30,
+                }]
+            };
+
+            const config = {
+                type: 'bar',
+                data: data,
+                options: {
+                    indexAxis: 'y', // Horizontal Bar Chart
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const value = context.raw;
+                                    if (value === 0.1) return ' Deleted immediately upon delivery';
+                                    if (value === 365) return ' Until account deletion';
+                                    return ` Retained for ${value} days`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            display: false, // Hide X axis numbers for cleaner look
+                            max: 400
+                        },
+                        y: {
+                            grid: { display: false }
+                        }
+                    }
+                }
+            };
+
+            new Chart(ctx, config);
+        });
+
+    </script>
+</body>
+</html>
